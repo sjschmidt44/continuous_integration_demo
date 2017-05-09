@@ -19,10 +19,12 @@ mongoose.connect(MONGODB_URI)
 const app = module.exports = express()
 const router = express.Router()
 
+app.use(morgan('dev'))
 app.use(cors())
 app.use(bodyParser)
-app.use(morgan('dev'))
-app.use(require('./lib/error-middleware'))
+app.use(require('./lib/error-middleware')) // require and mount middleware without saving reference
+
 app.use('/api', require('./routes/auth-routes')(router))
+app.use('/api', require('./routes/gallery-routes')(router))
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))

@@ -13,7 +13,7 @@ const userSchema = Schema({
   username: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  findhash: {type: String, unique: true}
+  findHash: {type: String, unique: true}
 })
 
 userSchema.methods.generatePasswordHash = function(password) {
@@ -47,7 +47,10 @@ userSchema.methods.generateFindHash = function() {
     function _generateFindHash() {
       this.findHash = crypto.randomBytes(32).toString('hex')
       this.save()
-      .then(() => resolve(this.findHash))
+      .then(() => {
+        console.log(this.findHash);
+        resolve(this.findHash)
+      })
       .catch(err => {
         if(tries > 3) return reject(err)
         tries++
