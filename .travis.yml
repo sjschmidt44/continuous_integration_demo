@@ -12,6 +12,9 @@ addons:
       - g++-5
 env:
   - CXX=g++-5
+  - MONGODB_URI=mongodb://localhost/test
+  - PORT=3000
+  - APP_SECRET='lulwat top secret'
 sudo: required
 after_success:
   - npm run coveralls
